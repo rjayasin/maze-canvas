@@ -1,0 +1,13 @@
+export const CELL_SIZE = 20;
+export const WALL_COLOR = '#1a1a2e';
+export const WALL_WIDTH = 2;
+export const ACTIVE_CELL_COLOR = '#ffffff';
+export const SOLUTION_PATH_COLOR = 'rgba(99, 102, 241, 0.45)';
+export const SOLUTION_PATH_WIDTH = 8;
+export const INACTIVE_COLOR = '#e2e8f0';
+export const BRUSH_PREVIEW_COLOR = 'rgba(99, 102, 241, 0.12)';
+export const BRUSH_PREVIEW_STROKE = 'rgba(99, 102, 241, 0.35)';
+export const DEFAULT_BRUSH_RADIUS = 5;
+export const MIN_BRUSH_RADIUS = 2;
+export const MAX_BRUSH_RADIUS = 15;
+export const MAZE_ITERATIONS_PER_FRAME = 80;
