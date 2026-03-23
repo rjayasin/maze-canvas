@@ -40,37 +40,43 @@ export class MazeGenerator {
         }
     }
 
+    _processEdge() {
+        if (this.frontier.length === 0) return;
+
+        const idx = Math.floor(Math.random() * this.frontier.length);
+        const edge = this.frontier[idx];
+
+        // Swap-remove for O(1)
+        this.frontier[idx] = this.frontier[this.frontier.length - 1];
+        this.frontier.pop();
+
+        const { from, to } = edge;
+
+        if (to.inMaze) return;
+        if (to.state === 'inactive') return;
+
+        this.grid.removeWall(from, to);
+        to.inMaze = true;
+        to.parent = from;
+
+        const neighbors = this.grid.getNeighbors(to);
+        for (const { cell: neighbor } of neighbors) {
+            if (neighbor.state !== 'inactive' && !neighbor.inMaze) {
+                this.frontier.push({ from: to, to: neighbor });
+            }
+        }
+    }
+
+    expandAll() {
+        while (this.frontier.length > 0) {
+            this._processEdge();
+        }
+    }
+
     expand() {
         let iterations = MAZE_ITERATIONS_PER_FRAME;
         while (iterations > 0 && this.frontier.length > 0) {
-            // Pick random edge
-            const idx = Math.floor(Math.random() * this.frontier.length);
-            const edge = this.frontier[idx];
-
-            // Swap-remove for O(1)
-            this.frontier[idx] = this.frontier[this.frontier.length - 1];
-            this.frontier.pop();
-
-            const { from, to } = edge;
-
-            // Skip if target is already in maze (avoid loops)
-            if (to.inMaze) continue;
-            // Skip if target became inactive (shouldn't happen but safety)
-            if (to.state === 'inactive') continue;
-
-            // Connect
-            this.grid.removeWall(from, to);
-            to.inMaze = true;
-            to.parent = from;
-
-            // Add new frontier edges from the newly connected cell
-            const neighbors = this.grid.getNeighbors(to);
-            for (const { cell: neighbor } of neighbors) {
-                if (neighbor.state !== 'inactive' && !neighbor.inMaze) {
-                    this.frontier.push({ from: to, to: neighbor });
-                }
-            }
-
+            this._processEdge();
             iterations--;
         }
     }

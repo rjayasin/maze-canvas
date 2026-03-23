@@ -9,6 +9,7 @@ const container = document.getElementById('canvas-container');
 const brushSlider = document.getElementById('brush-slider');
 const brushValue = document.getElementById('brush-value');
 const clearBtn = document.getElementById('clear-btn');
+const undoBtn = document.getElementById('undo-btn');
 const togglePathBtn = document.getElementById('toggle-path-btn');
 
 let brushRadius = DEFAULT_BRUSH_RADIUS;
@@ -50,6 +51,50 @@ clearBtn.addEventListener('click', () => {
     grid.reset();
     maze.reset();
     input.reset();
+});
+
+function rebuildMaze() {
+    const pathCoords = input.solutionPath.map(c => ({ row: c.row, col: c.col }));
+    grid.reset();
+    maze.reset();
+    input.solutionPath = [];
+
+    for (const { row, col } of pathCoords) {
+        const cell = grid.getCell(row, col);
+
+        // If Prim's already connected this cell, disconnect from its
+        // parent to prevent cycles (same logic as _drawCell)
+        if (cell.inMaze && cell.state !== 'solution' && cell.parent) {
+            grid.addWall(cell, cell.parent);
+            cell.parent = null;
+        }
+
+        cell.state = 'solution';
+        cell.inMaze = true;
+        cell.parent = null;
+        input.solutionPath.push(cell);
+
+        if (input.solutionPath.length >= 2) {
+            const prev = input.solutionPath[input.solutionPath.length - 2];
+            grid.removeWall(prev, cell);
+        }
+
+        maze.activateBrush(row, col, brushRadius);
+        maze.expandAll();
+    }
+}
+
+function doUndo() {
+    if (input.undo()) rebuildMaze();
+}
+
+undoBtn.addEventListener('click', doUndo);
+
+document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
+        e.preventDefault();
+        doUndo();
+    }
 });
 
 togglePathBtn.addEventListener('click', () => {

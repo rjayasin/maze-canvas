@@ -110,6 +110,12 @@ export class InputHandler {
         return cells;
     }
 
+    undo() {
+        if (this.solutionPath.length === 0 || this.drawing) return false;
+        this.solutionPath.pop();
+        return true;
+    }
+
     reset() {
         this.drawing = false;
         this.lastCell = null;

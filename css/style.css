@@ -45,6 +45,7 @@ body {
 }
 
 #clear-btn,
+#undo-btn,
 #toggle-path-btn {
     background: #334155;
     color: #e2e8f0;
@@ -57,6 +58,7 @@ body {
 }
 
 #clear-btn:hover,
+#undo-btn:hover,
 #toggle-path-btn:hover {
     background: #475569;
 }
