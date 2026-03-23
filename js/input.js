@@ -13,19 +13,44 @@ export class InputHandler {
         this._onMouseDown = this._onMouseDown.bind(this);
         this._onMouseMove = this._onMouseMove.bind(this);
         this._onMouseUp = this._onMouseUp.bind(this);
+        this._onTouchStart = this._onTouchStart.bind(this);
+        this._onTouchMove = this._onTouchMove.bind(this);
+        this._onTouchEnd = this._onTouchEnd.bind(this);
 
         canvas.addEventListener('mousedown', this._onMouseDown);
         canvas.addEventListener('mousemove', this._onMouseMove);
         canvas.addEventListener('mouseup', this._onMouseUp);
         canvas.addEventListener('mouseleave', this._onMouseUp);
+
+        canvas.addEventListener('touchstart', this._onTouchStart, { passive: false });
+        canvas.addEventListener('touchmove', this._onTouchMove, { passive: false });
+        canvas.addEventListener('touchend', this._onTouchEnd);
+        canvas.addEventListener('touchcancel', this._onTouchEnd);
     }
 
     _getLogicalCoords(e) {
         const rect = this.canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
         return {
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top,
+            x: clientX - rect.left,
+            y: clientY - rect.top,
         };
+    }
+
+    _onTouchStart(e) {
+        e.preventDefault();
+        this._onMouseDown(e);
+    }
+
+    _onTouchMove(e) {
+        e.preventDefault();
+        this._onMouseMove(e);
+    }
+
+    _onTouchEnd(e) {
+        e.preventDefault();
+        this._onMouseUp();
     }
 
     _onMouseDown(e) {
