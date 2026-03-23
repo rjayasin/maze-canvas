@@ -9,8 +9,10 @@ const container = document.getElementById('canvas-container');
 const brushSlider = document.getElementById('brush-slider');
 const brushValue = document.getElementById('brush-value');
 const clearBtn = document.getElementById('clear-btn');
+const togglePathBtn = document.getElementById('toggle-path-btn');
 
 let brushRadius = DEFAULT_BRUSH_RADIUS;
+let showPath = true;
 
 function setupCanvas() {
     const dpr = window.devicePixelRatio || 1;
@@ -50,10 +52,15 @@ clearBtn.addEventListener('click', () => {
     input.reset();
 });
 
+togglePathBtn.addEventListener('click', () => {
+    showPath = !showPath;
+    togglePathBtn.textContent = showPath ? 'Hide Path' : 'Show Path';
+});
+
 // Main loop
 function loop() {
     maze.expand();
-    renderer.render(input.solutionPath, input.mouseX, input.mouseY, brushRadius);
+    renderer.render(showPath ? input.solutionPath : [], input.mouseX, input.mouseY, brushRadius);
     requestAnimationFrame(loop);
 }
 

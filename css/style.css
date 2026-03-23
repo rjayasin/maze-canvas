@@ -44,7 +44,8 @@ body {
     accent-color: #6366f1;
 }
 
-#clear-btn {
+#clear-btn,
+#toggle-path-btn {
     background: #334155;
     color: #e2e8f0;
     border: 1px solid #475569;
@@ -55,7 +56,8 @@ body {
     transition: background 0.15s;
 }
 
-#clear-btn:hover {
+#clear-btn:hover,
+#toggle-path-btn:hover {
     background: #475569;
 }
 
