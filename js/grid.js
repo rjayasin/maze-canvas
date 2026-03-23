@@ -7,6 +7,7 @@ export class Cell {
         this.walls = { north: true, south: true, east: true, west: true };
         this.state = 'inactive'; // 'inactive' | 'active' | 'solution'
         this.inMaze = false;
+        this.parent = null; // Prim's tree parent — used to break cycles
     }
 }
 
@@ -56,6 +57,15 @@ export class Grid {
         if (dr === 1)  { cellA.walls.south = false; cellB.walls.north = false; }
         if (dc === 1)  { cellA.walls.east = false;  cellB.walls.west = false; }
         if (dc === -1) { cellA.walls.west = false;   cellB.walls.east = false; }
+    }
+
+    addWall(cellA, cellB) {
+        const dr = cellB.row - cellA.row;
+        const dc = cellB.col - cellA.col;
+        if (dr === -1) { cellA.walls.north = true; cellB.walls.south = true; }
+        if (dr === 1)  { cellA.walls.south = true; cellB.walls.north = true; }
+        if (dc === 1)  { cellA.walls.east = true;  cellB.walls.west = true; }
+        if (dc === -1) { cellA.walls.west = true;   cellB.walls.east = true; }
     }
 
     reset() {

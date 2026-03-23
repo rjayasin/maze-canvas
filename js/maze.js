@@ -61,6 +61,7 @@ export class MazeGenerator {
             // Connect
             this.grid.removeWall(from, to);
             to.inMaze = true;
+            to.parent = from;
 
             // Add new frontier edges from the newly connected cell
             const neighbors = this.grid.getNeighbors(to);

@@ -63,6 +63,13 @@ export class InputHandler {
     }
 
     _drawCell(cell) {
+        // If cell was already connected by Prim's, disconnect it from its
+        // Prim's parent to prevent cycles (which create shortcut paths).
+        if (cell.inMaze && cell.state !== 'solution' && cell.parent) {
+            this.grid.addWall(cell, cell.parent);
+            cell.parent = null;
+        }
+
         // Remove wall between this cell and the previous in the drawing sequence
         if (this.prevDrawCell) {
             const dr = Math.abs(cell.row - this.prevDrawCell.row);
@@ -77,6 +84,7 @@ export class InputHandler {
             cell.inMaze = true;
             this.solutionPath.push(cell);
         }
+        cell.parent = null;
 
         this.prevDrawCell = cell;
         this.onCellDrawn(cell);
