@@ -95,6 +95,16 @@ export class Renderer {
                 ctx.lineTo(cell.col * cs + cs / 2, cell.row * cs + cs / 2);
             }
             ctx.stroke();
+
+            // Start marker (green)
+            const pad = 3;
+            ctx.fillStyle = '#22c55e';
+            ctx.fillRect(first.col * cs + pad, first.row * cs + pad, cs - pad * 2, cs - pad * 2);
+
+            // End marker (red)
+            const last = solutionPath[solutionPath.length - 1];
+            ctx.fillStyle = '#ef4444';
+            ctx.fillRect(last.col * cs + pad, last.row * cs + pad, cs - pad * 2, cs - pad * 2);
         }
 
         // Brush preview
