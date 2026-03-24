@@ -11,7 +11,7 @@ export class Renderer {
         this.grid = grid;
     }
 
-    render(solutionPath, mouseX, mouseY, brushRadius) {
+    render(solutionPath, fullPath, mouseX, mouseY, brushRadius) {
         const ctx = this.ctx;
         const grid = this.grid;
         const cs = CELL_SIZE;
@@ -81,7 +81,7 @@ export class Renderer {
         }
         ctx.stroke();
 
-        // Solution path
+        // Solution path line
         if (solutionPath.length > 0) {
             ctx.strokeStyle = SOLUTION_PATH_COLOR;
             ctx.lineWidth = SOLUTION_PATH_WIDTH;
@@ -95,14 +95,16 @@ export class Renderer {
                 ctx.lineTo(cell.col * cs + cs / 2, cell.row * cs + cs / 2);
             }
             ctx.stroke();
+        }
 
-            // Start marker (green)
+        // Start/end markers (always visible if path exists)
+        if (fullPath.length > 0) {
             const pad = 3;
+            const first = fullPath[0];
             ctx.fillStyle = '#22c55e';
             ctx.fillRect(first.col * cs + pad, first.row * cs + pad, cs - pad * 2, cs - pad * 2);
 
-            // End marker (red)
-            const last = solutionPath[solutionPath.length - 1];
+            const last = fullPath[fullPath.length - 1];
             ctx.fillStyle = '#ef4444';
             ctx.fillRect(last.col * cs + pad, last.row * cs + pad, cs - pad * 2, cs - pad * 2);
         }

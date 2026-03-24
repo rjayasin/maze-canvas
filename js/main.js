@@ -105,7 +105,7 @@ togglePathBtn.addEventListener('click', () => {
 // Main loop
 function loop() {
     maze.expand();
-    renderer.render(showPath ? input.solutionPath : [], input.mouseX, input.mouseY, brushRadius);
+    renderer.render(showPath ? input.solutionPath : [], input.solutionPath, input.mouseX, input.mouseY, brushRadius);
     requestAnimationFrame(loop);
 }
 
