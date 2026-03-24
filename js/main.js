@@ -109,7 +109,8 @@ function loop() {
     const showBrush = !isTouchDevice || input.drawing;
     const mx = showBrush ? input.mouseX : null;
     const my = showBrush ? input.mouseY : null;
-    renderer.render(showPath ? input.solutionPath : [], input.solutionPath, mx, my, brushRadius);
+    const visiblePath = (showPath || input.drawing) ? input.solutionPath : [];
+    renderer.render(visiblePath, input.solutionPath, mx, my, brushRadius);
     requestAnimationFrame(loop);
 }
 
