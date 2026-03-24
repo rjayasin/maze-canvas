@@ -101,6 +101,9 @@ document.addEventListener('keydown', (e) => {
         e.preventDefault();
         doUndo();
     }
+    if (e.key === 'u' || e.key === 'U') {
+        doUndo();
+    }
     if (e.key === 'h' || e.key === 'H') {
         togglePath();
     }
