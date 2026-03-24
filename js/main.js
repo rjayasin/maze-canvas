@@ -10,6 +10,7 @@ const brushSlider = document.getElementById('brush-slider');
 const brushValue = document.getElementById('brush-value');
 const clearBtn = document.getElementById('clear-btn');
 const undoBtn = document.getElementById('undo-btn');
+const fillBtn = document.getElementById('fill-btn');
 const togglePathBtn = document.getElementById('toggle-path-btn');
 
 let brushRadius = DEFAULT_BRUSH_RADIUS;
@@ -95,6 +96,15 @@ document.addEventListener('keydown', (e) => {
         e.preventDefault();
         doUndo();
     }
+});
+
+fillBtn.addEventListener('click', () => {
+    grid.reset();
+    maze.reset();
+    input.reset();
+    const centerRow = Math.floor(grid.rows / 2);
+    const centerCol = Math.floor(grid.cols / 2);
+    maze.fillAll(centerRow, centerCol);
 });
 
 togglePathBtn.addEventListener('click', () => {

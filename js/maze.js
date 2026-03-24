@@ -81,6 +81,34 @@ export class MazeGenerator {
         }
     }
 
+    fillAll(seedRow, seedCol) {
+        const grid = this.grid;
+
+        // Activate every cell
+        for (let r = 0; r < grid.rows; r++) {
+            for (let c = 0; c < grid.cols; c++) {
+                const cell = grid.cells[r][c];
+                if (cell.state === 'inactive') {
+                    cell.state = 'active';
+                }
+            }
+        }
+
+        // Mark the seed cell as inMaze to start Prim's
+        const seed = grid.getCell(seedRow, seedCol);
+        seed.inMaze = true;
+
+        // Seed frontier from the seed cell
+        const neighbors = grid.getNeighbors(seed);
+        for (const { cell: neighbor } of neighbors) {
+            if (neighbor.state !== 'inactive' && !neighbor.inMaze) {
+                this.frontier.push({ from: seed, to: neighbor });
+            }
+        }
+
+        this.expandAll();
+    }
+
     reset() {
         this.frontier = [];
     }
