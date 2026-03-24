@@ -91,10 +91,18 @@ function doUndo() {
 
 undoBtn.addEventListener('click', doUndo);
 
+function togglePath() {
+    showPath = !showPath;
+    togglePathBtn.textContent = showPath ? 'Hide Path' : 'Show Path';
+}
+
 document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
         e.preventDefault();
         doUndo();
+    }
+    if (e.key === 'h' || e.key === 'H') {
+        togglePath();
     }
 });
 
@@ -107,10 +115,7 @@ fillBtn.addEventListener('click', () => {
     maze.fillAll(centerRow, centerCol);
 });
 
-togglePathBtn.addEventListener('click', () => {
-    showPath = !showPath;
-    togglePathBtn.textContent = showPath ? 'Hide Path' : 'Show Path';
-});
+togglePathBtn.addEventListener('click', togglePath);
 
 // Main loop
 function loop() {
