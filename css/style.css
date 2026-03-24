@@ -91,7 +91,13 @@ canvas {
     #controls {
         gap: 8px;
         padding: 8px 12px;
-        flex-wrap: wrap;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #controls > * {
+        flex-shrink: 0;
     }
 
     #controls label {
