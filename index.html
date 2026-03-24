@@ -8,15 +8,15 @@
 </head>
 <body>
     <div id="controls">
-        <label>
+        <label title="[ to decrease, ] to increase">
             Brush Size
             <input type="range" id="brush-slider" min="2" max="15" value="5">
             <span id="brush-value">5</span>
         </label>
         <button id="clear-btn">Clear</button>
-        <button id="undo-btn">Undo</button>
+        <button id="undo-btn" title="U or Ctrl+Z">Undo</button>
         <button id="fill-btn">Fill</button>
-        <button id="toggle-path-btn">Hide Path</button>
+        <button id="toggle-path-btn" title="H">Hide Path</button>
         <span class="instructions">Click and drag to draw a maze path</span>
     </div>
     <div id="canvas-container">
