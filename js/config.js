@@ -1,4 +1,6 @@
-export const CELL_SIZE = 20;
+export function getCellSize() {
+    return window.innerWidth <= 600 ? 12 : 20;
+}
 export const WALL_COLOR = '#1a1a2e';
 export const WALL_WIDTH = 2;
 export const ACTIVE_CELL_COLOR = '#ffffff';

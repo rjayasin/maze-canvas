@@ -1,5 +1,5 @@
 import {
-    CELL_SIZE, WALL_COLOR, WALL_WIDTH, ACTIVE_CELL_COLOR,
+    getCellSize, WALL_COLOR, WALL_WIDTH, ACTIVE_CELL_COLOR,
     SOLUTION_PATH_COLOR, SOLUTION_PATH_WIDTH, INACTIVE_COLOR,
     BRUSH_PREVIEW_COLOR, BRUSH_PREVIEW_STROKE,
 } from './config.js';
@@ -14,7 +14,7 @@ export class Renderer {
     render(solutionPath, fullPath, mouseX, mouseY, brushRadius) {
         const ctx = this.ctx;
         const grid = this.grid;
-        const cs = CELL_SIZE;
+        const cs = getCellSize();
         const w = this.canvas._logicalWidth || this.canvas.width;
         const h = this.canvas._logicalHeight || this.canvas.height;
 

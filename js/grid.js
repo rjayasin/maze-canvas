@@ -1,4 +1,4 @@
-import { CELL_SIZE } from './config.js';
+import { getCellSize } from './config.js';
 
 export class Cell {
     constructor(row, col) {
@@ -13,8 +13,8 @@ export class Cell {
 
 export class Grid {
     constructor(canvas) {
-        this.cols = Math.floor(canvas.width / CELL_SIZE);
-        this.rows = Math.floor(canvas.height / CELL_SIZE);
+        this.cols = Math.floor(canvas.width / getCellSize());
+        this.rows = Math.floor(canvas.height / getCellSize());
         this.cells = [];
         this._init();
     }
@@ -73,8 +73,8 @@ export class Grid {
     }
 
     snapToGrid(x, y) {
-        const col = Math.floor(x / CELL_SIZE);
-        const row = Math.floor(y / CELL_SIZE);
+        const col = Math.floor(x / getCellSize());
+        const row = Math.floor(y / getCellSize());
         return this.getCell(row, col);
     }
 }
