@@ -1,4 +1,4 @@
-import { DEFAULT_BRUSH_RADIUS } from './config.js';
+import { DEFAULT_BRUSH_RADIUS, MIN_BRUSH_RADIUS, MAX_BRUSH_RADIUS } from './config.js';
 import { Grid } from './grid.js';
 import { MazeGenerator } from './maze.js';
 import { Renderer } from './renderer.js';
@@ -103,6 +103,16 @@ document.addEventListener('keydown', (e) => {
     }
     if (e.key === 'h' || e.key === 'H') {
         togglePath();
+    }
+    if (e.key === '[') {
+        brushRadius = Math.max(MIN_BRUSH_RADIUS, brushRadius - 1);
+        brushSlider.value = brushRadius;
+        brushValue.textContent = brushRadius;
+    }
+    if (e.key === ']') {
+        brushRadius = Math.min(MAX_BRUSH_RADIUS, brushRadius + 1);
+        brushSlider.value = brushRadius;
+        brushValue.textContent = brushRadius;
     }
 });
 
