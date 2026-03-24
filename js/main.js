@@ -105,7 +105,11 @@ togglePathBtn.addEventListener('click', () => {
 // Main loop
 function loop() {
     maze.expand();
-    renderer.render(showPath ? input.solutionPath : [], input.solutionPath, input.mouseX, input.mouseY, brushRadius);
+    const isTouchDevice = 'ontouchstart' in window;
+    const showBrush = !isTouchDevice || input.drawing;
+    const mx = showBrush ? input.mouseX : null;
+    const my = showBrush ? input.mouseY : null;
+    renderer.render(showPath ? input.solutionPath : [], input.solutionPath, mx, my, brushRadius);
     requestAnimationFrame(loop);
 }
 
